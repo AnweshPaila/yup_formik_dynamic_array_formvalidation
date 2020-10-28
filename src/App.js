@@ -20,9 +20,9 @@ const App = () => (
           name: "Hello Desh",
           email: "hello@email.com"
         }
-
       ],
-        organizationName: []
+        organizationName: [],
+        isEditing: true
       }}
       validationSchema={Yup.object({
         organizationName: Yup.string().required(
@@ -50,18 +50,28 @@ const App = () => (
             name="users"
             render={arrayHelpers => {
               const users = values.users;
+              const editing = values.isEditing;
               return (
                 <div>
                   {users && users.length > 0
                     ? users.map((user, index) => (
                         <div key={index}>
-                          <Field
-                            className="form-control"
-                            placeholder="user name"
-                            name={`users.${index}.name`}
-                          />
-                          <ErrorMessage name={`users.${index}.name`} component="span" className="text-danger"/>
-                          <br />
+                          {
+                            editing ? (
+                              <>
+                              <Field
+                                className="form-control"
+                                placeholder="user name"
+                                name={`users.${index}.name`}
+                              />
+                              <ErrorMessage name={`users.${index}.name`} component="span" className="text-danger"/>
+                              <br />
+                              </>
+                            ) 
+                            :
+                            <span className="text-success">{user.name}</span>
+                          }
+                          
 
                           <Field
                             className="form-control"
